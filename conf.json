@@ -1,0 +1,25 @@
+[
+	{
+		"name": "Joint1",
+		"xyz": [0, 0, 1],
+		"rpy": [0, 0, 0],
+		"type": "continuous",
+		"child": "Joint2",
+		"parent": "root"
+	},
+	{
+		"name": "Joint2",
+		"xyz": [0, 0, 2],
+		"rpy": [0, 0, 0],
+		"type": "continuous",
+		"parent": "Joint1",
+		"child": "EndEffector"
+	},
+	{
+		"name": "EndEffector",
+		"xyz": [0, 0, 3],
+		"rpy": [0, 0, 0],
+		"type": "end",
+		"parent": "Joint2"
+	}
+]
