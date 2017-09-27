@@ -11,31 +11,54 @@ class Joint:
 		Initialises the objects with the following data:
 		origin - The xyz coordinates of the joint (Numpy array)
 		rotation - The matrix rotation of the join (Numpy array)
-		type - The joint type, currently supporting "continuous" and "end"
+		type - The joint type, currently supporting "revolute" and "end"
 		parent - The parent Joint object
 		child - The child Joint object
 		name - The name of the joint (Preferably unique)
 		"""
-		self.origin = np.array(config["xyz"]);
-		self.rotation = eulerAnglesToRot(config["rpy"])
+		self.origin = np.array(config["xyz"])
+		self.angles = np.array(config["rpy"])
 		self.type = config["type"]
 		self.parent = parent
 		self.name = config["name"]
 		self.child = None
+		self.axis = config["axis"]
 
 	def __str__(self):
 		"""
 		Converts the object into a nicely formatted string for output purposes
 		"""
 		toOutput = "---------- %s ----------\n" % self.name
-		toOutput += "origin: %f %f %f\n" % (self.origin[0], self.origin[1], self.origin[2])
-		toOutput += "Rotation matrix:\n"
-		toOutput += "%s\n" % str(self.rotation)
+		toOutput += str(self.transMat)
 		if self.type != "end":
 			toOutput += "\n######## %s's Child #########\n" % self.name
 			toOutput += str(self.child)
 		return toOutput
 
+	def forwardKinematic(self, transMat, angles=[]):
+		angle = 0
+		if angles:
+			angle = angles.pop(0)
+
+		curMat = np.dot(transMat, self.getTransformationMatrix(angle))
+		if self.child:
+			print curMat
+			return self.child.forwardKinematic(curMat, angles)
+		else:
+			return curMat
+
+	def getTransformationMatrix(self, jointAngle):
+		parentOrigin = np.array([0, 0, 0])
+		parentAngles = np.array([0, 0, 0])
+		if self.parent:
+			parentOrigin = self.parent.origin
+			parentAngles = self.parent.angles
+
+		jointAngles = np.array([0, 0, 0], dtype=float)
+		jointAngles[self.axis] = jointAngle
+		transMat = np.append(eulerAnglesToRot(self.angles - parentAngles + jointAngles), np.transpose([self.origin - parentOrigin]), axis=1)
+		transMat = np.append(transMat, [[0,0,0,1]], axis=0)
+		return transMat
 
 def eulerAnglesToRot(rpy):
 	"""
@@ -81,7 +104,7 @@ def main():
 	#Create the joints object
 	rootJoint = Joint(configByParent["root"])
 	createChildJoints(configByParent, rootJoint)
-	print rootJoint
+	print rootJoint.forwardKinematic(np.eye(4), [1,1,0])
 
 if __name__ == '__main__':
 	main()
