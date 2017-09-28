@@ -100,6 +100,11 @@ def createChildJoints(configsByName, parent):
 	createChildJoints(configsByName, childJoint)
 
 def parseJointsConfigFile(filePath):
+	"""
+	Parses the configuration file and outputs the root joint with the number of joints.
+
+	filePath - The patht to the configuration file
+	"""
 	configsByName = {}
 	rootConfig = {}
 	numJoints = 0
