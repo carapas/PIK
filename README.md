@@ -24,10 +24,10 @@ parameters:
 ```
 
 ## How to use it?
-'''
+```
 pik.py usage:
 python pik.py "<target position array>" -v
 <target position array>: An array representing the position of the target to reach
 -v: Outputs a visualisation graph of the robot
 Example: python pik.py "[0, 0, 2]"
-'''
+```
