@@ -10,7 +10,7 @@
 	},
 	{
 		"name": "Joint2",
-		"xyz": [0, 0, 0],
+		"xyz": [0, 0, 3],
 		"rpy": [0, 0, 0],
 		"type": "revolute",
 		"child": "Joint3",
@@ -18,7 +18,7 @@
 	},
 	{
 		"name": "Joint3",
-		"xyz": [0, 0, 1],
+		"xyz": [0, 0, 4],
 		"rpy": [0, 0, 0],
 		"type": "revolute",
 		"child": "Joint4",
@@ -26,7 +26,7 @@
 	},
 	{
 		"name": "Joint4",
-		"xyz": [0, 0, 2],
+		"xyz": [0, 0, 5],
 		"rpy": [0, 0, 0],
 		"type": "revolute",
 		"child": "EndEffector",
@@ -34,7 +34,7 @@
 	},
 	{
 		"name": "EndEffector",
-		"xyz": [0, 0, 3],
+		"xyz": [0, 0, 6],
 		"rpy": [0, 0, 0],
 		"type": "end",
 		"axis":  0
