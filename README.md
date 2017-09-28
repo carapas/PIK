@@ -1,6 +1,6 @@
 # PIK
 ## What is this?
-This is a simple python IK solver with a simple JSON config file. 
+This is a simple python IK solver with a simple JSON config file to configure your robot similarly to URDF files. 
 
 ## Requirements
 - Numpy
